@@ -8,7 +8,6 @@ const QuestionTiles = ({ questions }) => {
   const dispatch = useDispatch();
   const handleClick = (question) => {
     dispatch(setSelectedQuestion(question));
-    
   };
   return (
     <div>

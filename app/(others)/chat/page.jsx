@@ -1,7 +1,8 @@
 "use client";
+import { setSelectedQuestion } from "@/store/slices/questionSlice";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // export const metadata = {
 //   title: "About Us || FindHouse - Real Estate React Template",
@@ -9,6 +10,8 @@ import { useSelector } from "react-redux";
 // };
 
 const index = () => {
+  //**** */
+  const dispatch = useDispatch();
   const question = useSelector((state) => state.question.selectedQuestion);
 
   const [messages, setMessages] = useState([
@@ -19,15 +22,26 @@ const index = () => {
   const handleSend = async () => {
     if (question ? !question.trim() : !input.trim()) return;
     //api call and response getting
-    const reponse = await fetch(`http://127.0.0.1:8000/call?message=${input}`);
+    // const reponse = await fetch(`http://127.0.0.1:8000/call?message=${input}`);
 
-    const data = await reponse.json();
+    // const data = await reponse.json();
     //user and chat bot messages based on data and input
-    const userMessage = { from: "user", text: input };
-    const botReply = { from: "bot", text: `${data}` };
+
+    const userMessage = {
+      from: "user",
+      text: () => {
+        if (question === "") {
+          return input;
+        } else {
+          question;
+        }
+      },
+    };
+    const botReply = { from: "bot", text: "data" };
 
     setMessages([...messages, userMessage, botReply]);
     setInput("");
+    dispatch(setSelectedQuestion(""));
   };
   return (
     <div className="chatbot-container">
@@ -47,7 +61,7 @@ const index = () => {
         <input
           type="text"
           className="chatbot-input"
-          value={question ? question : input}
+          value={question === "" ? input : question}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message..."
         />
