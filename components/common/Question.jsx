@@ -1,19 +1,23 @@
 // components/QuestionTiles.js
 "use client";
+import { setSelectedQuestion } from "@/store/slices/questionSlice";
+import Link from "next/link";
+import { useDispatch } from "react-redux";
 
 const QuestionTiles = ({ questions }) => {
-
-
-
+  const dispatch = useDispatch();
+  const handleClick = (question) => {
+    dispatch(setSelectedQuestion(question));
+    
+  };
   return (
     <div>
-      <div
-        className="questionWrapper"
-
-      >
+      <div className="questionWrapper">
         {questions.map((item) => (
           <div key={item.id} className="tile">
-            <p>{item.question}</p>
+            <Link href={"/chat"} onClick={handleClick(item.question)}>
+              {item.question}
+            </Link>
           </div>
         ))}
       </div>
@@ -48,7 +52,6 @@ const QuestionTiles = ({ questions }) => {
         .tile:hover {
           transform: translateY(-5px);
           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-
         }
 
         .tile p {

@@ -13,19 +13,17 @@
 @import "node_modules/react-modal-video/scss/modal-video.scss";
 
 .parent-menu-active > .pro-inner-item > .pro-item-content {
-    color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
 }
 
-    .parent-menu-active{
-        color: #ff5a5f ;
-        
-        .inactive-mobile-menu{
-            color: #484848 !important;
-    
-        }
-    }
-    // .inactive-mobile-menu{
-    //     color: #484848 !important;
+.parent-menu-active {
+  color: #ff5a5f;
 
-    // }
+  .inactive-mobile-menu {
+    color: #484848 !important;
+  }
+}
+// .inactive-mobile-menu{
+//     color: #484848 !important;
 
+// }
