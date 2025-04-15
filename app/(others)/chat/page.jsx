@@ -1,62 +1,140 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect, useRef } from "react";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
 
-// export const metadata = {
-//   title: "About Us || FindHouse - Real Estate React Template",
-//   description: "FindHouse - Real Estate React Template",
-// };
 
 const index = () => {
-  const question = useSelector((state) => state.question.selectedQuestion);
+const [messageInput, setMessageInput] = useState("");
+const [messages, setMessages] = useState([
+  { sender: "bot", content: "Hi, it's Zippi here! How can I help you today?" },
+]);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState(null);
 
-  const [messages, setMessages] = useState([
-    { from: "bot", text: "Hello! How can I help you today?" },
-  ]);
-  const [input, setInput] = useState("");
+const chatContainerRef = useRef(null);
 
-  const handleSend = async () => {
-    if (question ? !question.trim() : !input.trim()) return;
-    //api call and response getting
-    const reponse = await fetch(`http://127.0.0.1:8000/call?message=${input}`);
+useEffect(() => {
+  if (chatContainerRef.current) {
+    chatContainerRef.current.scrollTo({
+      top: chatContainerRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }
+}, [messages]);
 
-    const data = await reponse.json();
-    //user and chat bot messages based on data and input
-    const userMessage = { from: "user", text: input };
-    const botReply = { from: "bot", text: `${data}` };
+const handleSendMessage = async () => {
+  if (messageInput.trim() === "") return;
 
-    setMessages([...messages, userMessage, botReply]);
-    setInput("");
-  };
-  return (
-    <div className="chatbot-container">
-      <div className="chatbot-header">I am Here to Assist You</div>
-      <div className="chatbot-messages">
+  const userMessage = { sender: "user", content: messageInput };
+  setMessages((prevMessages) => [...prevMessages, userMessage]);
+
+  setLoading(true);
+  let botMessage = { sender: "bot", content: "" };
+  setMessages((prevMessages) => [...prevMessages, botMessage]);
+
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/call?message=${encodeURIComponent(messageInput)}`
+    );
+
+    if (!response.ok || !response.body) {
+      throw new Error("Streaming response failed.");
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+    let done = false;
+
+    while (!done) {
+      const { value, done: readerDone } = await reader.read();
+      done = readerDone;
+      const chunk = decoder.decode(value || new Uint8Array(), { stream: true });
+
+      if (chunk) {
+        setMessages((prevMessages) => {
+          const last = prevMessages[prevMessages.length - 1];
+          if (last.sender === "bot") {
+            return [
+              ...prevMessages.slice(0, -1),
+              { ...last, content: last.content + chunk },
+            ];
+          }
+          return prevMessages;
+        });
+      }
+    }
+  } catch (err) {
+    console.error("Streaming error:", err);
+    setError("Something went wrong while receiving the response.");
+  } finally {
+    setLoading(false);
+  }
+
+  setMessageInput("");
+};
+
+const handleInputChange = (e) => {
+  setMessageInput(e.target.value);
+};
+
+const handleKeyDown = (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    handleSendMessage();
+  }
+};
+
+return (
+  <div className="max-w-full  shadow-lg p-4 !h-[90%] py-[20px] px-[10px]">
+    <div className="space-y-4 h-[90%]">
+      <div
+        id="messages"
+        ref={chatContainerRef}
+        className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50"
+        style={{ height: "90%", overflowY: "auto" }}
+      >
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`chatbot-message ${
-              msg.from === "user" ? "user" : "bot"
-            }`}>
-            {msg.text}
+            className={`mb-4 ${msg.sender === "user" ? "text-right" : "text-left"}`}
+          >
+            <div
+              className={`inline-block px-4 py-2 rounded-lg ${
+                msg.sender === "user"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-200 text-gray-800"
+              }`}
+            >
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {msg.content}
+              </ReactMarkdown>
+            </div>
           </div>
         ))}
       </div>
-      <div className="chatbot-input-area">
+
+      <div className="flex gap-4">
         <input
           type="text"
-          className="chatbot-input"
-          value={question ? question : input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type a message..."
+          value={messageInput}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Type your message..."
         />
-        <button className="chatbot-send" onClick={handleSend}>
-          Send
+        <button
+          onClick={handleSendMessage}
+          className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200"
+          disabled={loading}
+        >
+          {loading ? "Sending..." : "Send"}
         </button>
       </div>
+      {error && <p className="text-red-500">{error}</p>}
     </div>
-  );
-};
-
+  </div>
+);
+}
 export default dynamic(() => Promise.resolve(index), { ssr: false });
