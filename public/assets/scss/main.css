@@ -21209,6 +21209,7 @@ button.gm-ui-hover-effect:focus {
   flex-direction: column;
   gap: 10px;
   scroll-behavior: smooth;
+  height: 100vh;
 }
 
 .chatbot-message {
@@ -21216,6 +21217,7 @@ button.gm-ui-hover-effect:focus {
   border-radius: 20px;
   max-width: 70%;
   word-wrap: break-word;
+  color: white;
 }
 
 .chatbot-message.bot {
@@ -21235,7 +21237,7 @@ button.gm-ui-hover-effect:focus {
   align-items: center;
   padding: 20px 10px;
   border-top: 1px solid #ddd;
-  background-color: #fff; /* Ensure background is not transparent */
+  background-color: #fff; 
   position: sticky;
   bottom: 0;
   z-index: 10;
