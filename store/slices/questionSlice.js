@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  selectedQuestion: "",
+  selectedQuestion: null,
 };
 
 const questionSlice = createSlice({

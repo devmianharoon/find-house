@@ -13,11 +13,11 @@ const QuestionTiles = ({ questions }) => {
     <div>
       <div className="questionWrapper">
         {questions.map((item) => (
-          <div key={item.id} className="tile">
-            <Link href={"/chat"} onClick={handleClick(item.question)}>
+          <Link href={"/chat"} onClick={() => handleClick(item.question)}>
+            <div key={item.id} className="tile">
               {item.question}
-            </Link>
-          </div>
+            </div>
+          </Link>
         ))}
       </div>
       <style jsx>{`

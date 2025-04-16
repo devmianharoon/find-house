@@ -1,6 +1,7 @@
 import GlobalHeroFilter from "../common/GlobalHeroFilter";
 import QuestionTiles from "../common/Question";
 const questions = [
+    { id: 0, question: "hi" },
     { id: 1, question: "What are the available internet providers and their plans in the 90210 zip code?" },
     { id: 2, question: "Which cable TV services are offered in the 60601 zip code?" },
     { id: 3, question: "Are there any fiber optic internet options in the 33101 zip code?" },
@@ -22,7 +23,7 @@ const HeroFilter = () => {
     return (
         <div className="home_content">
             {/* <div className="home-text text-center"> */}
-                <h2 className="fz55 text-center ">Find Your Dream Home</h2>
+                <h2 className="fz55 text-center ">Find the Right Internet Plan Fast</h2>
                 {/* <p className="fz18 color-white">
                     From as low as $10 per day with limited time offer
                     discounts.
