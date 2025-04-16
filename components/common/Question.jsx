@@ -1,34 +1,101 @@
-// components/QuestionTiles.js
 "use client";
 import { setSelectedQuestion } from "@/store/slices/questionSlice";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation"; // ✅ use the router from next/navigation (app router)
 
 const QuestionTiles = ({ questions }) => {
   const dispatch = useDispatch();
+  const router = useRouter(); // ✅ initialize router
+  const [inputQuestion, setInputQuestion] = useState("");
+
   const handleClick = (question) => {
     dispatch(setSelectedQuestion(question));
+    router.push("/chat"); // ✅ navigate after setting the question
   };
+
+  const handleInputSubmit = () => {
+    if (inputQuestion.trim() !== "") {
+      handleClick(inputQuestion);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleInputSubmit();
+    }
+  };
+
   return (
     <div>
+      {/* Input and Button */}
+      <div className="inputSection">
+        <input
+          type="text"
+          value={inputQuestion}
+          onKeyDown={handleKeyDown}
+          onChange={(e) => setInputQuestion(e.target.value)}
+          placeholder="Ask your own question"
+        />
+        <div className="buttonImageWrapper" onClick={handleInputSubmit}>
+          <Image
+            src="/assets/images/rebort.webp"
+            width={60}
+            height={69}
+            alt="bot"
+          />
+        </div>
+      </div>
+
+      {/* Question Tiles */}
       <div className="questionWrapper">
         {questions.map((item) => (
-          <Link href={"/chat"} onClick={() => handleClick(item.question)}>
-            <div key={item.id} className="tile">
-              {item.question}
-            </div>
-          </Link>
+          <div
+            key={item.id}
+            onClick={() => handleClick(item.question)}
+            className="tile"
+            style={{ cursor: "pointer" }}
+          >
+            {item.question}
+          </div>
         ))}
       </div>
+
       <style jsx>{`
+        .inputSection {
+          display: flex;
+          gap: 10px;
+          padding: 20px;
+        }
+
+        input {
+          flex: 1;
+          padding: 10px;
+          font-size: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+        }
+
+        .buttonImageWrapper {
+          width: 60px;
+          height: 60px;
+          border-radius: 6px;
+          overflow: hidden;
+          transition: transform 0.2s;
+          cursor: pointer;
+        }
+
         .questionWrapper {
           display: flex;
           flex-wrap: wrap;
           gap: 10px;
-          padding: 20px;
-          background-color: #f5f5f5;
+          padding-left: 20px;
+          padding-right: 20px;
+          padding-bottom: 20px;
           border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
           margin: 0 auto;
           overflow: auto;
         }
@@ -43,7 +110,6 @@ const QuestionTiles = ({ questions }) => {
           justify-content: center;
           text-align: center;
           transition: transform 0.2s;
-
           height: 50px;
           box-sizing: border-box;
         }
@@ -56,7 +122,7 @@ const QuestionTiles = ({ questions }) => {
         .tile p {
           margin: 0;
           color: #666;
-          fonst-size: 1rem;
+          font-size: 1rem;
           font-weight: 500;
         }
       `}</style>
