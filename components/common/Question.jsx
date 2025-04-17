@@ -1,19 +1,18 @@
 "use client";
 import { setSelectedQuestion } from "@/store/slices/questionSlice";
-import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; // ✅ use the router from next/navigation (app router)
+import { useRouter } from "next/navigation";
 
 const QuestionTiles = ({ questions }) => {
   const dispatch = useDispatch();
-  const router = useRouter(); // ✅ initialize router
+  const router = useRouter();
   const [inputQuestion, setInputQuestion] = useState("");
 
   const handleClick = (question) => {
     dispatch(setSelectedQuestion(question));
-    router.push("/chat"); // ✅ navigate after setting the question
+    router.push("/chat");
   };
 
   const handleInputSubmit = () => {
@@ -30,74 +29,91 @@ const QuestionTiles = ({ questions }) => {
   };
 
   return (
-    <div>
-      {/* Input and Button */}
-      <div className="inputSection">
-        <input
-          type="text"
-          value={inputQuestion}
-          onKeyDown={handleKeyDown}
-          onChange={(e) => setInputQuestion(e.target.value)}
-          placeholder="Ask your own question"
-        />
-        <div className="buttonImageWrapper" onClick={handleInputSubmit}>
-          <Image
-            src="/assets/images/rebort.webp"
-            width={60}
-            height={69}
-            alt="bot"
-          />
+    <div className="container">
+      {/* Left: Questions */}
+      <div className="leftSection">
+        <div className="questionWrapper">
+          {questions.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => handleClick(item.question)}
+              className="tile"
+            >
+              {item.question}
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Question Tiles */}
-      <div className="questionWrapper">
-        {questions.map((item) => (
-          <div
-            key={item.id}
-            onClick={() => handleClick(item.question)}
-            className="tile"
-            style={{ cursor: "pointer" }}
-          >
-            {item.question}
+      {/* Right: Bot Image + Input */}
+      <div className="rightSection">
+        <div className="botImageWrapper">
+          <Image
+            src="/assets/images/rebort.webp"
+            width={315}
+            height={250}
+            alt="bot"
+            className="botImage"
+            style={{ borderRadius: "5px" }}
+          />
+        </div>
+        <div className="inputSection">
+          <input
+            type="text"
+            value={inputQuestion}
+            onKeyDown={handleKeyDown}
+            onChange={(e) => setInputQuestion(e.target.value)}
+            placeholder="Ask your own question"
+          />
+          <div className="submitButton" onClick={handleInputSubmit}>
+            ➤
           </div>
-        ))}
+        </div>
       </div>
 
+      {/* STYLES */}
       <style jsx>{`
-        .inputSection {
+        .container {
           display: flex;
-          gap: 10px;
           padding: 20px;
+          gap: 20px;
         }
 
-        input {
+        .leftSection {
+          flex: 2;
+        }
+
+        .rightSection {
           flex: 1;
-          padding: 10px;
-          font-size: 1rem;
-          border: 1px solid #ccc;
-          border-radius: 6px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          animation: slideInFromRight 1.8s ease-in-out forwards; /* ⬅ slower and smoother */
         }
 
-        .buttonImageWrapper {
-          width: 60px;
-          height: 60px;
-          border-radius: 6px;
-          overflow: hidden;
-          transition: transform 0.2s;
-          cursor: pointer;
+        @keyframes slideInFromRight {
+          0% {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          100% {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+
+        .botImage {
+          border-radius: 5px;
         }
 
         .questionWrapper {
           display: flex;
-          flex-wrap: wrap;
           gap: 10px;
-          padding-left: 20px;
-          padding-right: 20px;
-          padding-bottom: 20px;
-          border-radius: 8px;
-          margin: 0 auto;
-          overflow: auto;
+          max-height: 80vh;
+          overflow-y: auto;
+          flex-wrap: wrap;
+          width: fit-content;
         }
 
         .tile {
@@ -105,13 +121,9 @@ const QuestionTiles = ({ questions }) => {
           border: 1px solid #e0e0e0;
           border-radius: 8px;
           padding: 15px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          text-align: center;
+          cursor: pointer;
           transition: transform 0.2s;
-          height: 50px;
-          box-sizing: border-box;
+          width: fit-content;
         }
 
         .tile:hover {
@@ -119,11 +131,47 @@ const QuestionTiles = ({ questions }) => {
           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .tile p {
-          margin: 0;
-          color: #666;
+        .botImageWrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 5px;
+        }
+
+        .inputSection {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-top: auto;
+          width: 100%;
+          padding-top: 9px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
+        input {
+          flex: 1;
+          padding-left: 10px;
+          padding-right: 10px;
+          padding-top: 15px;
+          padding-bottom: 15px;
           font-size: 1rem;
-          font-weight: 500;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+        }
+
+        .submitButton {
+          background-color: #0070f3;
+          color: white;
+          padding: 12px 14px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 1.2rem;
+          user-select: none;
+        }
+
+        .submitButton:hover {
+          background-color: #005bb5;
         }
       `}</style>
     </div>
