@@ -2,7 +2,7 @@
 import { setSelectedQuestion } from "@/store/slices/questionSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import Image from "next/image";
+  
 import { useRouter } from "next/navigation";
 
 const QuestionTiles = ({ questions }) => {
@@ -29,9 +29,9 @@ const QuestionTiles = ({ questions }) => {
   };
 
   return (
-    <div className="container">
+    <div className="">
       {/* Left: Questions */}
-      <div className="leftSection">
+      {/* <div className="leftSection">
         <div className="questionWrapper">
           {questions.map((item) => (
             <div
@@ -43,11 +43,11 @@ const QuestionTiles = ({ questions }) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Right: Bot Image + Input */}
       <div className="rightSection">
-        <div className="botImageWrapper">
+        {/* <div className="botImageWrapper">
           <Image
             src="/assets/images/rebort.webp"
             width={315}
@@ -56,18 +56,21 @@ const QuestionTiles = ({ questions }) => {
             className="botImage"
             style={{ borderRadius: "5px" }}
           />
-        </div>
+        </div> */}
         <div className="inputSection">
-          <input
+          {/* <input
             type="text"
             value={inputQuestion}
             onKeyDown={handleKeyDown}
             onChange={(e) => setInputQuestion(e.target.value)}
             placeholder="Ask your own question"
-          />
-          <div className="submitButton" onClick={handleInputSubmit}>
-            ➤
-          </div>
+          /> */}
+          <button
+            onClick={handleClick}
+            type="submit"
+            className="btn btn-thm src-btn">
+            Search
+          </button>
         </div>
       </div>
 
@@ -161,17 +164,40 @@ const QuestionTiles = ({ questions }) => {
         }
 
         .submitButton {
-          background-color: #0070f3;
+          background-color: #ff4d4d;
           color: white;
-          padding: 12px 14px;
+          padding: 6px 12px;
           border-radius: 6px;
           cursor: pointer;
           font-size: 1.2rem;
           user-select: none;
+          width: 180px;
         }
 
         .submitButton:hover {
-          background-color: #005bb5;
+          background-color: white;
+          color: #ff4d4d;
+          border: 2px solid #ff4d4d;
+        }
+        .src-btn {
+          border-radius: 8px;
+    background-color: var(--color-primary);
+    box-shadow: 0 1px 4px 0 rgba(255, 90, 95, .3);
+    font-size: 16px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.2;
+    height: 50px;
+    width: 170px;
+    transition: all .3s ease;
+}
+    .src-btn:hover {
+    background-color: white !important;
+          color: #ff4d4d;
+          border: 2px solid #ff4d4d;
+    }
+
+
         }
       `}</style>
     </div>

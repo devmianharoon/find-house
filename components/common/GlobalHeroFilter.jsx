@@ -3,7 +3,7 @@ import GlobalFilter from "./GlobalFilter";
 const GlobalHeroFilter = ({ className = "" }) => {
   return (
     <div className={`home_adv_srch_opt ${className}`}>
-      <ul className="nav nav-pills" id="pills-tab" role="tablist">
+      {/* <ul className="nav nav-pills" id="pills-tab" role="tablist">
         <li className="nav-item">
           <a
             className="nav-link active"
@@ -31,7 +31,7 @@ const GlobalHeroFilter = ({ className = "" }) => {
             Rent
           </a>
         </li>
-      </ul>
+      </ul> */}
       {/* End nav-pills */}
 
       <div className="tab-content home1_adsrchfrm" id="pills-tabContent">

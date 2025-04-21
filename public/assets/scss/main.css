@@ -3416,6 +3416,10 @@ header.header-nav.menu_style_home_seven .ace-responsive-menu > li.last {
 /*== Home Css ==*/
 .home_content {
   padding: 380px 0 400px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 .home_content .home-text p {
@@ -5198,8 +5202,8 @@ form.home5_advanced_search_form
 
 .home1-overlay:before {
   content: "";
-  background-color: #24324a;
-  opacity: 0.6;
+  background-color: #0a6bde;
+  /* opacity: 0.6; */
   position: absolute;
   bottom: 0;
   left: 0;
@@ -17524,8 +17528,9 @@ legend span {
 }
 
 .fz55 {
-  font-size: 55px;
+  font-size: 44px;
   color: #fff;
+  margin: 0;
 }
 @media (max-width: 991px) {
   .fz55 {
@@ -21242,7 +21247,7 @@ button.gm-ui-hover-effect:focus {
   align-items: center;
   padding: 20px 10px;
   border-top: 1px solid #ddd;
-  background-color: #fff; 
+  background-color: #fff;
   position: sticky;
   bottom: 0;
   z-index: 10;

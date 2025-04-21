@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Image from "next/image";
 import featureProContent from "../../../data/properties";
@@ -11,7 +11,7 @@ const FeatureProperties = () => {
     fade: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: false,
+    autoplay: true,
     speed: 1000,
   };
 
