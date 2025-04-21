@@ -122,7 +122,7 @@ html {
 
 body {
   background-attachment: fixed;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   color: #777777;
   font-family: "Nunito", sans-serif;
   font-size: 16px;
@@ -5198,7 +5198,7 @@ form.home5_advanced_search_form
 
 .home1-overlay:before {
   content: "";
-  background-color: #24324a;
+  background-color: #24324a  !important;
   opacity: 0.6;
   position: absolute;
   bottom: 0;

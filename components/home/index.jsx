@@ -1,3 +1,4 @@
+"use client";
 import CallToAction from "../common/CallToAction";
 import CopyrightFooter from "../common/footer/CopyrightFooter";
 import Footer from "../common/footer/Footer";
@@ -10,8 +11,51 @@ import Header from "./Header";
 import Hero from "./Hero";
 import WhyChoose from "../common/WhyChoose";
 import PopupSignInUp from "../common/PopupSignInUp";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { setLocation, setZipCode, setLocationError, fetchZipCode } from '../../store/slices/LocationSlice';
+
 
 const Index = () => {
+  const dispatch = useDispatch();
+  const { location, zipCode, error, loading } = useSelector((state) => state.location);
+  console.log("Location from Redux:", location);
+  console.log("Zip Code from Redux:", zipCode);
+  console.log("Error from Redux:", error);
+  console.log("Loading from Redux:", loading);
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          // Dispatch coordinates to Redux
+          dispatch(setLocation({ lat: latitude, lon: longitude }));
+          // Dispatch async action to fetch zip code
+          dispatch(fetchZipCode({ lat: latitude, lon: longitude }));
+        },
+        (err) => {
+          dispatch(setLocationError(err.message));
+        }
+      );
+    } else {
+      dispatch(setLocationError('Geolocation is not supported by this browser.'));
+    }
+  };
+
+  useEffect(() => {
+    const savedZipCode = Cookies.get('user_zipcode');
+    if (savedZipCode) {
+      console.log('Zip code from cookie:', savedZipCode);
+      // Dispatch saved zip code to Redux
+      dispatch(setZipCode(savedZipCode));
+    } else {
+      // If no zip code, get current location and fetch zip code
+      getLocation();
+    }
+  }, [dispatch]);
+
   return (
     <>
       {/* <!-- Main Header Nav --> */}
