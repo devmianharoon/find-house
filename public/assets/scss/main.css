@@ -122,7 +122,7 @@ html {
 
 body {
   background-attachment: fixed;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   color: #777777;
   font-family: "Nunito", sans-serif;
   font-size: 16px;
