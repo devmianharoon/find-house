@@ -1,5 +1,11 @@
 import GlobalHeroFilter from "../common/GlobalHeroFilter";
 import QuestionTiles from "../common/Question";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { setSelectedQuestion } from "@/store/slices/questionSlice";
+
+
 const questions = [
   {
     id: 1,
@@ -25,6 +31,28 @@ const questions = [
 ];
 
 const HeroFilter = () => {
+   const dispatch = useDispatch();
+    const router = useRouter();
+    const [inputQuestion, setInputQuestion] = useState("");
+  
+    const handleClick = (question) => {
+      // const questionWithZip = `Hi! I’m looking for internet options in my area. My zip code is ${zipCode}.`;
+      dispatch(setSelectedQuestion(question));
+      router.push("/chat");
+    };
+  
+    const handleInputSubmit = () => {
+      if (inputQuestion.trim() !== "") {
+        handleClick(inputQuestion);
+      }
+    };
+  
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleInputSubmit();
+      }
+    };
   return (
     <div className="home_content">
       {/* <div className="home-text text-center"> */}
@@ -38,7 +66,11 @@ const HeroFilter = () => {
       <QuestionTiles questions={questions} />
       <div className="moving-area">
         <h1>Moving ?</h1>
-        <input type="text" placeholder="Zip Code" />
+        <input type="text" placeholder="Zip Code" 
+        value={inputQuestion}
+        onKeyDown={handleKeyDown}
+        onChange={(e) => setInputQuestion(e.target.value)}
+        />
       </div>
 
       {/* <GlobalHeroFilter /> */}

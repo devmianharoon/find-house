@@ -11,7 +11,7 @@ import Header from "./Header";
 import Hero from "./Hero";
 import WhyChoose from "../common/WhyChoose";
 import PopupSignInUp from "../common/PopupSignInUp";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { setLocation, setZipCode, setLocationError, fetchZipCode } from '../../store/slices/LocationSlice';

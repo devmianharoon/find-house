@@ -1,17 +1,20 @@
 "use client";
 import { setSelectedQuestion } from "@/store/slices/questionSlice";
-import { useDispatch } from "react-redux";
 import { useState } from "react";
-  
+import { useDispatch, useSelector } from "react-redux";
+
 import { useRouter } from "next/navigation";
 
 const QuestionTiles = ({ questions }) => {
+  const {  zipCode } = useSelector((state) => state.location);
+  
   const dispatch = useDispatch();
   const router = useRouter();
   const [inputQuestion, setInputQuestion] = useState("");
 
   const handleClick = (question) => {
-    dispatch(setSelectedQuestion(question));
+    const questionWithZip = `Hi! I’m looking for internet options in my area. My zip code is ${zipCode}.`;
+    dispatch(setSelectedQuestion(questionWithZip));
     router.push("/chat");
   };
 
