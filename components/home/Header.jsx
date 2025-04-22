@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -24,27 +24,26 @@ const Header = () => {
     <header
       className={`header-nav menu_style_home_one navbar-scrolltofixed stricky main-menu  ${
         navbar ? "stricky-fixed " : ""
-      }`}
-    >
+      }`}>
       <div className="container-fluid p0">
         {/* <!-- Ace Responsive Menu --> */}
 
         <Link href="/" className="navbar_brand float-start dn-smd">
           <Image
-            width={40}
-            height={45}
+            width={120}
+            height={65}
             className="logo1 contain"
-            src="/assets/images/header-logo.png"
+            src="/assets/images/hyperlogo.png"
             alt="header-logo.png"
           />
           <Image
-            width={40}
-            height={45}
+            width={120}
+            height={65}
             className="logo2 contain"
-            src="/assets/images/header-logo2.png"
+            src="/assets/images/hyperlogo.png"
             alt="header-logo2.png"
           />
-          <span>FindHouse</span>
+          {/* <span>FindHouse</span> */}
         </Link>
         {/* site logo brand */}
 

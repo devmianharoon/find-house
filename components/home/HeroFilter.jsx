@@ -28,7 +28,7 @@ const HeroFilter = () => {
   return (
     <div className="home_content">
       {/* <div className="home-text text-center"> */}
-      <h2 className="fz55 ">Best Internet provider Companies Near me</h2>
+      <h2 className="fz55 ">Best Internet Provider Companies Near Me</h2>
       {/* <p className="fz18 color-white">
                     From as low as $10 per day with limited time offer
                     discounts.
@@ -36,6 +36,10 @@ const HeroFilter = () => {
       {/* </div> */}
       {/* End .home-text */}
       <QuestionTiles questions={questions} />
+      <div className="moving-area">
+        <h1>Moving ?</h1>
+        <input type="text" placeholder="Zip Code" />
+      </div>
 
       {/* <GlobalHeroFilter /> */}
     </div>

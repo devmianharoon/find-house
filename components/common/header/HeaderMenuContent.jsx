@@ -1,7 +1,6 @@
-'use client'
+"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 
 const HeaderMenuContent = ({ float = "" }) => {
   const pathname = usePathname();
@@ -242,17 +241,18 @@ const HeaderMenuContent = ({ float = "" }) => {
     <ul
       id="respMenu"
       className="ace-responsive-menu text-end d-lg-block d-none"
-      data-menu-style="horizontal"
-    >
+      data-menu-style="horizontal">
       <li className="dropitem">
         <a
           href="#"
           className={
-            home.some((page) => page.routerPath?.split('/')[1] === pathname?.split('/')[1])
+            home.some(
+              (page) =>
+                page.routerPath?.split("/")[1] === pathname?.split("/")[1]
+            )
               ? "ui-active"
               : undefined
-          }
-        >
+          }>
           <span className="title">Home</span>
           <span className="arrow"></span>
         </a>
@@ -264,9 +264,10 @@ const HeaderMenuContent = ({ float = "" }) => {
               <Link
                 href={item.routerPath}
                 className={
-                  pathname?.split('/')[1] === item.routerPath?.split('/')[1] ? "ui-active" : undefined
-                }
-              >
+                  pathname?.split("/")[1] === item.routerPath?.split("/")[1]
+                    ? "ui-active"
+                    : undefined
+                }>
                 {item.name}
               </Link>
             </li>
@@ -281,14 +282,16 @@ const HeaderMenuContent = ({ float = "" }) => {
           className={
             listing.some((parent) => {
               return parent.items.some(
-                (page) => page.routerPath?.split('/')[1] === pathname?.split('/')[1]
+                (page) =>
+                  page.routerPath?.split("/")[1] === pathname?.split("/")[1]
               );
             })
               ? "ui-active"
               : undefined
-          }
-        >
-          <span className="title">Listing</span>
+          }>
+          {/* <span className="title">Listing</span> */}
+          <span className="title">Internet</span>
+
           <span className="arrow"></span>
         </a>
         {/* <!-- Level Two--> */}
@@ -298,11 +301,13 @@ const HeaderMenuContent = ({ float = "" }) => {
               <a
                 href="#"
                 className={
-                  item.items.some((page) => page.routerPath?.split('/')[1] === pathname?.split('/')[1])
+                  item.items.some(
+                    (page) =>
+                      page.routerPath?.split("/")[1] === pathname?.split("/")[1]
+                  )
                     ? "ui-active"
                     : undefined
-                }
-              >
+                }>
                 {item.title}
               </a>
               {/* <!-- Level Three--> */}
@@ -312,11 +317,11 @@ const HeaderMenuContent = ({ float = "" }) => {
                     <Link
                       href={val.routerPath}
                       className={
-                        pathname?.split('/')[1] === val.routerPath?.split('/')[1]
+                        pathname?.split("/")[1] ===
+                        val.routerPath?.split("/")[1]
                           ? "ui-active"
                           : undefined
-                      }
-                    >
+                      }>
                       {val.name}
                     </Link>
                   </li>
@@ -335,15 +340,16 @@ const HeaderMenuContent = ({ float = "" }) => {
             property.some((parent) => {
               return parent.items.some(
                 (page) =>
-                  page.routerPath?.split('/')[1] === pathname?.split('/')[1] 
-                  // page.routerPath?.split('/')[1] + "/[id]" === pathname?.split('/')[1]
+                  page.routerPath?.split("/")[1] === pathname?.split("/")[1]
+                // page.routerPath?.split('/')[1] + "/[id]" === pathname?.split('/')[1]
               );
             })
               ? "ui-active"
               : undefined
-          }
-        >
-          <span className="title">Property</span>{" "}
+          }>
+          {/* <span className="title">Property</span>{" "} */}
+          <span className="title">Business Internet</span>
+
           <span className="arrow"></span>
         </a>
         <ul className="sub-menu ">
@@ -354,13 +360,12 @@ const HeaderMenuContent = ({ float = "" }) => {
                 className={
                   item.items.some(
                     (page) =>
-                      page.routerPath?.split('/')[1] === pathname?.split('/')[1] 
-                      // page.routerPath?.split('/')[1] + "/[id]" === pathname?.split('/')[1]
+                      page.routerPath?.split("/")[1] === pathname?.split("/")[1]
+                    // page.routerPath?.split('/')[1] + "/[id]" === pathname?.split('/')[1]
                   )
                     ? "ui-active"
                     : undefined
-                }
-              >
+                }>
                 {item.title}
               </a>
               {/* <!-- Level Three--> */}
@@ -370,12 +375,12 @@ const HeaderMenuContent = ({ float = "" }) => {
                     <Link
                       href={val.routerPath}
                       className={
-                        pathname?.split('/')[1] === val.routerPath?.split('/')[1] 
-                        // val.routerPath + "/[id]" === pathname?.split('/')[1]
-                          ? "ui-active"
+                        pathname?.split("/")[1] ===
+                        val.routerPath?.split("/")[1]
+                          ? // val.routerPath + "/[id]" === pathname?.split('/')[1]
+                            "ui-active"
                           : undefined
-                      }
-                    >
+                      }>
                       {val.name}
                     </Link>
                   </li>
@@ -387,16 +392,20 @@ const HeaderMenuContent = ({ float = "" }) => {
       </li>
       {/* End .dropitem */}
 
-      <li className="dropitem">
+      {/* <li className="dropitem">
         <a
           href="#"
           className={
-            pages.some((page) => page.routerPath?.split('/')[1] === pathname?.split('/')[1])
+            pages.some(
+              (page) =>
+                page.routerPath?.split("/")[1] === pathname?.split("/")[1]
+            )
               ? "ui-active"
               : undefined
-          }
-        >
+          }>
           <span className="title">Pages</span>
+         
+
           <span className="arrow"></span>
         </a>
         <ul className="sub-menu ">
@@ -405,15 +414,16 @@ const HeaderMenuContent = ({ float = "" }) => {
               <Link
                 href={item.routerPath}
                 className={
-                  pathname?.split('/')[1] === item.routerPath?.split('/')[1] ? "ui-active" : undefined
-                }
-              >
+                  pathname?.split("/")[1] === item.routerPath?.split("/")[1]
+                    ? "ui-active"
+                    : undefined
+                }>
                 {item.name}
               </Link>
             </li>
           ))}
         </ul>
-      </li>
+      </li> */}
       {/* End .dropitem */}
 
       <li className="dropitem">
@@ -422,14 +432,14 @@ const HeaderMenuContent = ({ float = "" }) => {
           className={
             blog.some(
               (page) =>
-                page.routerPath?.split('/')[1] === pathname?.split('/')[1] 
-                // page.routerPath?.split('/')[1] + "/[id]" === pathname?.split('/')[1]
+                page.routerPath?.split("/")[1] === pathname?.split("/")[1]
+              // page.routerPath?.split('/')[1] + "/[id]" === pathname?.split('/')[1]
             )
               ? "ui-active"
               : undefined
-          }
-        >
-          <span className="title">Blog</span>
+          }>
+          <span className="title">Direct TV</span>
+          {/* <span className="title">Blog</span> */}
           <span className="arrow"></span>
         </a>
         <ul className="sub-menu ">
@@ -438,12 +448,11 @@ const HeaderMenuContent = ({ float = "" }) => {
               <Link
                 href={item.routerPath}
                 className={
-                  pathname?.split('/')[1] === item.routerPath?.split('/')[1]
-                  // item.routerPath + "/[id]" === pathname?.split('/')[1]
-                    ? "ui-active"
+                  pathname?.split("/")[1] === item.routerPath?.split("/")[1]
+                    ? // item.routerPath + "/[id]" === pathname?.split('/')[1]
+                      "ui-active"
                     : undefined
-                }
-              >
+                }>
                 {item.name}
               </Link>
             </li>
@@ -455,29 +464,28 @@ const HeaderMenuContent = ({ float = "" }) => {
       <li className="last">
         <Link
           href="/contact"
-          className={pathname === "/contact" ? "ui-active" : undefined}
-        >
-          Contact
+          className={pathname === "/contact" ? "ui-active" : undefined}>
+          {/* Contact */}
+          Help
         </Link>
       </li>
       {/* End .dropitem */}
 
-      <li className={`list-inline-item list_s ${float}`}>
+      {/* <li className={`list-inline-item list_s ${float}`}>
         <a
           href="#"
           className="btn flaticon-user"
           data-bs-toggle="modal"
-          data-bs-target=".bd-example-modal-lg"
-        >
+          data-bs-target=".bd-example-modal-lg">
           <span className="dn-lg">Login/Register</span>
         </a>
-      </li>
+      </li> */}
       {/* End .dropitem */}
 
       <li className={`list-inline-item add_listing ${float}`}>
         <Link href="/create-listing">
-          <span className="flaticon-plus"></span>
-          <span className="dn-lg"> Create Listing</span>
+          {/* <span className="flaticon-plus"></span> */}
+          <span className="dn-lg"> Contact</span>
         </Link>
       </li>
       {/* End .dropitem */}

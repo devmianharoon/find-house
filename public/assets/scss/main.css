@@ -3420,6 +3420,22 @@ header.header-nav.menu_style_home_seven .ace-responsive-menu > li.last {
   justify-content: space-between;
   flex-wrap: nowrap;
   align-items: center;
+  position: relative;
+}
+.home_content .moving-area {
+  position: absolute;
+  bottom: 0;
+}
+.home_content .moving-area h1 {
+  font-size: 44px;
+  color: #fff;
+  margin: 0;
+}
+.home_content .moving-area input {
+  padding: 10px 20px;
+  border-radius: 10px;
+  outline: none;
+  border:none;
 }
 
 .home_content .home-text p {
@@ -17531,6 +17547,7 @@ legend span {
   font-size: 44px;
   color: #fff;
   margin: 0;
+  text-transform: capitalize;
 }
 @media (max-width: 991px) {
   .fz55 {
